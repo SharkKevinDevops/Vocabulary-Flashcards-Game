@@ -3,13 +3,7 @@ import sys
 import random
 import time
 from data.vocabulary import vocabulary_sets
-import os
-os.environ["SDL_VIDEODRIVER"] = "dummy"
 
-
-import os
-if not os.environ.get("CI"):
-    pygame.mixer.init()
 
 # Initialize pygame
 pygame.init()
