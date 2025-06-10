@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone Source') {
             steps {
-                git 'https://github.com/SharkKevinDevops/Vocabulary-Flashcards-Game.git', branch: 'main'
+                git url: 'https://github.com/SharkKevinDevops/Vocabulary-Flashcards-Game.git', branch: 'main'
             }
         }
 
