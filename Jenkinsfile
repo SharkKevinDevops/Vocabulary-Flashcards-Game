@@ -42,6 +42,7 @@ pipeline {
                 sh '''
                 . $VENV_DIR/bin/activate
                 python main.py
+                ^c
                 '''
             }
         }
