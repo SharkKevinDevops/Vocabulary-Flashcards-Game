@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        VENV_DIR = "venv"
+    }
+
     stages {
         stage('Clone Source') {
             steps {
@@ -8,24 +12,31 @@ pipeline {
             }
         }
 
-        stage('Setup Python Environment') {
+        stage('Install Dependencies') {
             steps {
                 sh '''
-                python3 -m venv venv
-                . venv/bin/activate
-                pip install --upgrade pip
-                [ -f requirements.txt ] && pip install -r requirements.txt || echo "No requirements.txt"
-                pip install pygame
+                    sudo apt-get update -y
+                    sudo apt-get install -y xvfb
                 '''
             }
         }
 
-        stage('Test Game Headless') {
+        stage('Setup Python Environment') {
             steps {
                 sh '''
-                . venv/bin/activate
-                sudo apt update && sudo apt install -y xvfb
-                xvfb-run -a python main.py
+                    python3 -m venv $VENV_DIR
+                    . $VENV_DIR/bin/activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
+            }
+        }
+
+        stage('Run Game with xvfb') {
+            steps {
+                sh '''
+                    . $VENV_DIR/bin/activate
+                    xvfb-run -a python main.py
                 '''
             }
         }
