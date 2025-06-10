@@ -3,6 +3,9 @@ import sys
 import random
 import time
 from data.vocabulary import vocabulary_sets
+import os
+os.environ["SDL_VIDEODRIVER"] = "dummy"
+
 
 # Initialize pygame
 pygame.init()
