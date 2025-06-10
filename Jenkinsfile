@@ -25,7 +25,7 @@ pipeline {
 
         stage('Test Optional') {
             steps {
-                echo 'This is test tage'
+                echo 'This is test stage'
             }
         }    
 
@@ -39,10 +39,11 @@ pipeline {
             steps {
                 echo 'Deploy to server or container if needed'
                 sh '''
-                . venv/bin/activate
+                . $VENV_DIR/bin/activate
                 python main.py
                 '''
             }
+        }
     }
 
     post {
