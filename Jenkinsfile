@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone Source') {
             steps {
-                git url: 'https://github.com/ten-ban/my-python-game.git', branch: 'main'
+                git url: 'hhttps://github.com/SharkKevinDevops/Vocabulary-Flashcards-Game.git', branch: 'main'
             }
         }
 
