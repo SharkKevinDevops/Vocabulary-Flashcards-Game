@@ -1,56 +1,33 @@
 pipeline {
     agent any
 
-    environment {
-        VENV_DIR = 'venv'
-        CI = 'true'
-    }
-
     stages {
         stage('Clone Source') {
             steps {
-                git url: 'https://github.com/SharkKevinDevops/Vocabulary-Flashcards-Game.git', branch: 'main'
+                git 'https://github.com/SharkKevinDevops/Vocabulary-Flashcards-Game.git', branch: 'main'
             }
         }
 
         stage('Setup Python Environment') {
             steps {
                 sh '''
-                python3 -m venv $VENV_DIR
-                . $VENV_DIR/bin/activate
+                python3 -m venv venv
+                . venv/bin/activate
                 pip install --upgrade pip
+                [ -f requirements.txt ] && pip install -r requirements.txt || echo "No requirements.txt"
                 pip install pygame
                 '''
             }
         }
 
-        stage('Test Optional') {
+        stage('Test Game Headless') {
             steps {
-                echo 'This is test stage'
-            }
-        }    
-
-        stage('Build or Package') {
-            steps {
-                echo 'If needed, you can package the game here.'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploy to server or container if needed'
                 sh '''
-                . $VENV_DIR/bin/activate
-                python main.py
-                ^c
+                . venv/bin/activate
+                sudo apt update && sudo apt install -y xvfb
+                xvfb-run -a python main.py
                 '''
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'CI/CD job completed'
         }
     }
 }
