@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         VENV_DIR = 'venv'
+        CI = 'true'
     }
 
     stages {
