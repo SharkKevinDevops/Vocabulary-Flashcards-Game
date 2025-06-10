@@ -7,6 +7,10 @@ import os
 os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 
+import os
+if not os.environ.get("CI"):
+    pygame.mixer.init()
+
 # Initialize pygame
 pygame.init()
 
